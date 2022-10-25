@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,19 +22,19 @@ class NewsCubit extends Cubit<NewsState> {
   List<BottomNavigationBarItem> bottomNavBarItems = const [
     BottomNavigationBarItem(
       icon: Icon(Icons.business),
-    label: 'Business',
+      label: 'Business',
     ),
-     BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(Icons.sports_rounded),
-    label: 'Sports',
+      label: 'Sports',
     ),
-     BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(Icons.science),
-    label: 'Science',
+      label: 'Science',
     ),
-      BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(Icons.settings),
-    label: 'Settings',
+      label: 'Settings',
     ),
   ];
 
@@ -42,26 +44,59 @@ class NewsCubit extends Cubit<NewsState> {
     ScienceScreen(),
     SettingsScreen()
   ];
-  void changeBottomNavBar (int index){
-  currentIndex = index;
-  emit(NewsBottomNavState());
+  void changeBottomNavBar(int index) {
+    currentIndex = index;
+    emit(NewsBottomNavState());
   }
 
-  List<Map<String,dynamic>> business = [];
+  List<Map<String, dynamic>> business = [];
 
-  getBusinessData(){
+  getBusinessData() {
     emit(NewsGetBusinessLoadingState());
     NetworkHelper.getData(url: 'v2/top-headlines', query: {
-      'country':'eg',
+      'country': 'eg',
       'category': 'business',
-      'apiKey':'65f7f556ec76449fa7dc7c0069f040ca'
+      'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
     }).then((value) {
+      business = value.data['atricles'];
       emit(NewsGetBusinessSucsessState());
-    }).catchError((erorr){
+    }).catchError((erorr) {
       print(erorr.toString());
       emit(NewsGetBusinessErorrState(erorr));
     });
   }
 
+  List<Map<String, dynamic>> sports = [];
 
+  getSportData() {
+    emit(NewsGetSportsLoadingState());
+    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+      'country': 'eg',
+      'category': 'sports',
+      'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
+    }).then((value) {
+      sports = value.data['articles'];
+      emit(NewsGetSportsSucsessState());
+    }).catchError((erorr) {
+      print(erorr.toString());
+      emit(NewsGetSportsErorrState(erorr));
+    });
+  }
+
+  List<Map<String, dynamic>> science = [];
+
+  getScienceData() {
+    emit(NewsGetScienceLoadingState());
+    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+      'country': 'eg',
+      'category': 'science',
+      'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
+    }).then((value) {
+      science = value.data['articles'];
+      emit(NewsGetScienceSucsessState());
+    }).catchError((erorr) {
+      print(erorr.toString());
+      emit(NewsGetScienceErorrState(erorr));
+    });
+  }
 }
