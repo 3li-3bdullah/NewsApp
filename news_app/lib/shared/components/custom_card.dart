@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key}) : super(key: key);
+  const CustomCard({Key? key, required this.dataList}) : super(key: key);
+  final Map<String, dynamic> dataList;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class CustomCard extends StatelessWidget {
             width: 130,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(image: NetworkImage('')),
+              image: DecorationImage(image: NetworkImage('${dataList['urlToImage']}')),
             ),
           ),
           const SizedBox(
@@ -28,14 +27,14 @@ class CustomCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Title',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    '${dataList['title']}',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text('date',style: TextStyle(color: Colors.grey),),
+                 Text('${dataList['publishedAt']}',style: const TextStyle(color: Colors.grey),),
                 ],
               ),
             ),
