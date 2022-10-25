@@ -6,6 +6,7 @@ import 'package:news_app/modules/business/business_screen.dart';
 import 'package:news_app/modules/science/science_screen.dart';
 import 'package:news_app/modules/settings/settings_screen.dart';
 import 'package:news_app/modules/sports/sports_screen.dart';
+import 'package:news_app/shared/network/network_helper.dart';
 
 part 'news_state.dart';
 
@@ -44,6 +45,22 @@ class NewsCubit extends Cubit<NewsState> {
   void changeBottomNavBar (int index){
   currentIndex = index;
   emit(NewsBottomNavState());
+  }
+
+  List<Map<String,dynamic>> business = [];
+
+  getBusinessData(){
+    emit(NewsGetBusinessLoadingState());
+    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+      'country':'eg',
+      'category': 'business',
+      'apiKey':'65f7f556ec76449fa7dc7c0069f040ca'
+    }).then((value) {
+      emit(NewsGetBusinessSucsessState());
+    }).catchError((erorr){
+      print(erorr.toString());
+      emit(NewsGetBusinessErorrState(erorr));
+    });
   }
 
 
