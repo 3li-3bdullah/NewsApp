@@ -15,3 +15,21 @@ class NewsGetBusinessErorrState extends NewsState {
    final String erorr;
    NewsGetBusinessErorrState(this.erorr);
 }
+
+class NewsGetSportsLoadingState extends NewsState {}
+
+class NewsGetSportsSucsessState extends NewsState {}
+
+class NewsGetSportsErorrState extends NewsState {
+   final String erorr;
+   NewsGetSportsErorrState(this.erorr);
+}
+
+class NewsGetScienceLoadingState extends NewsState {}
+
+class NewsGetScienceSucsessState extends NewsState {}
+
+class NewsGetScienceErorrState extends NewsState {
+   final String erorr;
+   NewsGetScienceErorrState(this.erorr);
+}
