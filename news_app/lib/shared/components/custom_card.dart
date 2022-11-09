@@ -30,7 +30,7 @@ class CustomCard extends StatelessWidget {
                 children: [
                   Text(
                     '${dataList['title']}',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: Theme.of(context).textTheme.bodyText1,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
