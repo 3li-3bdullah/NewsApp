@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/news_app/cubit/news_cubit.dart';
+import 'package:news_app/shared/cubit/cubit/app_cubit.dart';
 
 class NewsLayout extends StatelessWidget {
   const NewsLayout({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class NewsLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit(),
+      create: (context) => NewsCubit()..getBusinessData(),
       child: BlocConsumer<NewsCubit, NewsState>(
         listener: ((context, state) {}),
         builder: ((context, states) {
@@ -21,6 +22,11 @@ class NewsLayout extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(Icons.search),
                 ),
+                IconButton(
+                    onPressed: () {
+                      AppCubit.get(context).changeMode();
+                    },
+                    icon: const Icon(Icons.mode_night_outlined))
               ],
             ),
             body: cubit.screens[cubit.currentIndex],
