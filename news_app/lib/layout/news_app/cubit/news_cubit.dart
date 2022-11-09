@@ -46,6 +46,13 @@ class NewsCubit extends Cubit<NewsState> {
   ];
   void changeBottomNavBar(int index) {
     currentIndex = index;
+    if(index == 1) {
+      getSportData();
+    }
+    if (index == 2) {
+      getScienceData();
+    }
+    
     emit(NewsBottomNavState());
   }
 
@@ -61,7 +68,6 @@ class NewsCubit extends Cubit<NewsState> {
       business = value.data['atricles'];
       emit(NewsGetBusinessSucsessState());
     }).catchError((erorr) {
-      print(erorr.toString());
       emit(NewsGetBusinessErorrState(erorr));
     });
   }
@@ -70,7 +76,8 @@ class NewsCubit extends Cubit<NewsState> {
 
   getSportData() {
     emit(NewsGetSportsLoadingState());
-    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+    if(sports.isEmpty){
+      NetworkHelper.getData(url: 'v2/top-headlines', query: {
       'country': 'eg',
       'category': 'sports',
       'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
@@ -78,16 +85,19 @@ class NewsCubit extends Cubit<NewsState> {
       sports = value.data['articles'];
       emit(NewsGetSportsSucsessState());
     }).catchError((erorr) {
-      print(erorr.toString());
       emit(NewsGetSportsErorrState(erorr));
     });
+    }else {
+      emit(NewsGetSportsSucsessState());
+    }
   }
 
   List<Map<String, dynamic>> science = [];
 
   getScienceData() {
     emit(NewsGetScienceLoadingState());
-    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+    if(science.isEmpty){
+      NetworkHelper.getData(url: 'v2/top-headlines', query: {
       'country': 'eg',
       'category': 'science',
       'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
@@ -95,8 +105,10 @@ class NewsCubit extends Cubit<NewsState> {
       science = value.data['articles'];
       emit(NewsGetScienceSucsessState());
     }).catchError((erorr) {
-      print(erorr.toString());
       emit(NewsGetScienceErorrState(erorr));
     });
+    }else{
+      emit(NewsGetScienceSucsessState());
+    }
   }
 }
