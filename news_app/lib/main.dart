@@ -23,11 +23,13 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               primarySwatch: Colors.deepPurple,
               appBarTheme: const AppBarTheme(
                 elevation: 0.0,
+                titleSpacing: 20.0,
                 iconTheme: IconThemeData(
                   color: Colors.black,
                 ),
@@ -57,6 +59,7 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: primaryColor,
               primarySwatch: Colors.deepPurple,
               appBarTheme: const AppBarTheme(
+                 titleSpacing: 20.0,
                 elevation: 0.0,
                 iconTheme: IconThemeData(
                   color: Colors.white,
@@ -83,7 +86,7 @@ class MyApp extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0)),
             ),
-         
+            themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             home: const NewsLayout(),
           );
         },
