@@ -60,15 +60,15 @@ class NewsCubit extends Cubit<NewsState> {
 
   getBusinessData() {
     emit(NewsGetBusinessLoadingState());
-    NetworkHelper.getData(url: 'v2/top-headlines', query: {
+    NetworkHelper.getData(url: 'v2/everything', query: {
       'country': 'eg',
       'category': 'business',
-      'apiKey': '65f7f556ec76449fa7dc7c0069f040ca'
+      'apiKey': 'fb58dcb9507b4c59a6e5459bfeec07fa'
     }).then((value) {
       business = value.data['atricles'];
       emit(NewsGetBusinessSucsessState());
     }).catchError((erorr) {
-      emit(NewsGetBusinessErorrState(erorr));
+      emit(NewsGetBusinessErorrState(erorr.toString()));
     });
   }
 
@@ -85,7 +85,7 @@ class NewsCubit extends Cubit<NewsState> {
       sports = value.data['articles'];
       emit(NewsGetSportsSucsessState());
     }).catchError((erorr) {
-      emit(NewsGetSportsErorrState(erorr));
+      emit(NewsGetSportsErorrState(erorr.toString()));
     });
     }else {
       emit(NewsGetSportsSucsessState());
@@ -105,7 +105,7 @@ class NewsCubit extends Cubit<NewsState> {
       science = value.data['articles'];
       emit(NewsGetScienceSucsessState());
     }).catchError((erorr) {
-      emit(NewsGetScienceErorrState(erorr));
+      emit(NewsGetScienceErorrState(erorr.toString()));
     });
     }else{
       emit(NewsGetScienceSucsessState());
